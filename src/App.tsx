@@ -3,6 +3,7 @@ import { animated, useSpring } from 'react-spring';
 import styled from 'styled-components';
 
 import HotOrCold from './components/HotOrCold';
+import IconAttribution from './components/IconAttribution';
 import Measurements from './components/Measurements';
 import config from './spring-config';
 
@@ -46,6 +47,7 @@ const App: React.FC = () => {
     <MainWrapper style={wrapperStyle}>
       <HotOrCold value={isIced} onChange={setIsIced} />
       <Measurements value={coffee} onChange={setCoffee} ratio={ratio} />
+      <IconAttribution />
     </MainWrapper>
   );
 };
