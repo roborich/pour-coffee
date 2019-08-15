@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import HotOrCold from './components/HotOrCold';
 import IconAttribution from './components/IconAttribution';
 import Measurements from './components/Measurements';
+import Slider from './components/Slider';
 import config from './spring-config';
 
 const getRatio = (isIced: boolean) => (isIced ? 65 / 1000 : 60 / 1000);
@@ -15,6 +16,9 @@ const MainWrapper = styled(animated.div)`
 
   font-family: 'Lexend Exa', sans-serif;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const App: React.FC = () => {
@@ -46,7 +50,10 @@ const App: React.FC = () => {
   return (
     <MainWrapper style={wrapperStyle}>
       <HotOrCold value={isIced} onChange={setIsIced} />
-      <Measurements value={coffee} onChange={setCoffee} ratio={ratio} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', textAlign: 'center' }}>
+        <Measurements value={coffee} isIced={isIced} ratio={ratio} />
+        <Slider value={coffee} onChange={setCoffee} ratio={ratio} />
+      </div>
       <IconAttribution />
     </MainWrapper>
   );
