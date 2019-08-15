@@ -21,6 +21,7 @@ const Card = styled.div`
   flex: 0 0 auto;
   width: 150px;
   height: 150px;
+  padding: 16px;
   text-align: center;
   background: white;
   display: flex;
@@ -28,6 +29,12 @@ const Card = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+
+  span {
+    font-weight: bold;
+    font-size: 20px;
+  }
 `;
 interface MeasurementsProps {
   value: number;
@@ -54,16 +61,16 @@ const Measurements: FC<MeasurementsProps> = ({ value, ratio, isIced }) => {
     <StyledMeasurements>
       <Card>
         <img src={grinder} width="100px" />
-        Coffee {value}g
+        Coffee <span>{value}g</span>
       </Card>
       <Card>
         <img src={kettle} width="100px" />
-        Water {isIced ? water : totalWater}ml
+        Water <span>{isIced ? water : totalWater}ml</span>
       </Card>
       {isIced && (
         <Card>
           <img src={iceSvg} width="100px" />
-          Ice {ice}g
+          Ice <span>{ice}g</span>
         </Card>
       )}
     </StyledMeasurements>

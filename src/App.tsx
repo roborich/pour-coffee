@@ -14,11 +14,13 @@ const defaultCoffee = 25;
 const MainWrapper = styled(animated.div)`
   @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
 
+  height: 100%;
   font-family: 'Lexend Exa', sans-serif;
   padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 `;
 
 const App: React.FC = () => {
@@ -50,11 +52,11 @@ const App: React.FC = () => {
   return (
     <MainWrapper style={wrapperStyle}>
       <HotOrCold value={isIced} onChange={setIsIced} />
-      <div style={{ display: 'flex', justifyContent: 'space-between', textAlign: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
         <Measurements value={coffee} isIced={isIced} ratio={ratio} />
         <Slider value={coffee} onChange={setCoffee} ratio={ratio} />
       </div>
-      <IconAttribution />
+      {/* <IconAttribution /> */}
     </MainWrapper>
   );
 };

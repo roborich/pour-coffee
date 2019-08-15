@@ -21,15 +21,23 @@ interface SliderProps {
   ratio: number;
 }
 const SliderWrapper = styled.div`
-  height: calc(100vh - 168px);
-  width: 200px;
+  min-height: 200px;
+  width: 150px;
 
   .MuiSlider-root {
     .MuiSlider-track {
-      width: 7;
+      width: 7px;
     }
+
     .MuiSlider-rail {
-      width: 7;
+      width: 7px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .MuiSlider-thumb {
+      width: 18px;
+      height: 18px;
+      background: white;
     }
   }
 `;
