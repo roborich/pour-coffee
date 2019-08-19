@@ -15,18 +15,16 @@ const HotOrIceCard = styled(animated.div)`
   @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
 
   font-family: 'Lexend Exa', sans-serif;
-  background: white;
   height: 150px;
   width: 150px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); */
   transform-style: preserve-3d;
-  transition: box-shadow 0.2s ease;
+  /* transition: box-shadow 0.2s ease; */
   position: relative;
   border-radius: 4px;
-
-  &:hover {
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-  }
+  user-select: none;
+  /* perspective: 600px; */
+  transform-origin: center right;
 
   img {
     width: 80px;
@@ -40,11 +38,19 @@ const HotOrIceCard = styled(animated.div)`
     top: 0;
     right: 0;
     bottom: 0;
+    background: white;
     backface-visibility: hidden;
+    transform-style: preserve-3d;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    will-change: transform;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    /* transition: box-shadow 0.2s ease; */
 
+    &:hover {
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    }
     span {
       font-size: 18px;
       display: block;
@@ -53,6 +59,7 @@ const HotOrIceCard = styled(animated.div)`
   }
 
   div:last-child {
+    /* z-index: -1; */
     transform: rotateY(180deg);
   }
 `;

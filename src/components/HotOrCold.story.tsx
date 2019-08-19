@@ -9,6 +9,6 @@ const Wrapper = ({ startIced = false }) => {
   return <HotOrCold value={isIced} onChange={setIced} />;
 };
 
-storiesOf('ColorPicker', module)
+storiesOf('Hot Or Iced', module)
   .add('Iced', () => <Wrapper startIced />)
   .add('Hot', () => <Wrapper />);

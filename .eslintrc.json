@@ -63,7 +63,7 @@
     "jsx-a11y/click-events-have-key-events": "off",
     "unicorn/prevent-abbreviations": "off",
    
-    "jsx-wrap-multiline": false,
+    "jsx-wrap-multiline": [false],
     "align": [true, "parameters", "statements"],
     "arrow-parens": 0,
     "ban": [true, ["fdescribe"], ["fit"]],
