@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-import { Slider } from '@material-ui/core';
-
 import iceSvg from '../assets/images/cold-ice-cubes.svg';
 import grinder from '../assets/images/grinder-line.svg';
 import kettle from '../assets/images/kettle-line.svg';
@@ -47,17 +45,6 @@ interface MeasurementsProps {
   ratio: number;
 }
 
-const getMarks = (ratio: number) => [
-  {
-    value: round(390 * ratio),
-    label: '1 Serving',
-  },
-  {
-    value: round(675 * ratio),
-    label: '2 Servings',
-  },
-];
-
 const Measurements: FC<MeasurementsProps> = ({ value, ratio, isIced }) => {
   const totalWater = round(value / ratio);
   const water = round(totalWater * 0.6);
@@ -65,17 +52,17 @@ const Measurements: FC<MeasurementsProps> = ({ value, ratio, isIced }) => {
   return (
     <StyledMeasurements>
       <Card>
-        <img src={grinder} />
+        <img alt="Coffee Grinder" src={grinder} />
         <div>Coffee</div>
         <span>{value}g</span>
       </Card>
       <Card>
-        <img src={kettle} />
+        <img alt="Water Kettle" src={kettle} />
         Water <span>{isIced ? water : totalWater}ml</span>
       </Card>
       {isIced && (
         <Card>
-          <img src={iceSvg} />
+          <img alt="Ice" src={iceSvg} />
           Ice <span>{ice}g</span>
         </Card>
       )}

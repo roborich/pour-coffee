@@ -108,27 +108,29 @@ const HotOrCold: FC<HotOrColdProps> = ({ value, onChange }) => {
     onChange(newValue);
   };
   return (
-    <Wrapper onClick={handleClick}>
+    <Wrapper
+      onClick={handleClick}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setHovered(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <Section>
         <span>Hot</span>
-        <img src={hotSvg} />
+        <img alt="Hot Coffee" src={hotSvg} />
       </Section>
       <Section>
         <span>Iced</span>
-        <img src={iceSvg} />
+        <img alt="Iced Coffee" src={iceSvg} />
       </Section>
-      <HotOrIceCard
-        style={{ transform: props.ys.interpolate(transform) }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
+      <HotOrIceCard style={{ transform: props.ys.interpolate(transform) }}>
         <div>
           <span>Hot</span>
-          <img src={hotSvg} />
+          <img alt="Hot Coffee" src={hotSvg} />
         </div>
         <div>
           <span>Iced</span>
-          <img src={iceSvg} />
+          <img alt="Iced Coffee" src={iceSvg} />
         </div>
       </HotOrIceCard>
     </Wrapper>

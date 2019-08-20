@@ -17,26 +17,37 @@ const MainWrapper = styled(animated.div)`
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
   font-family: 'Lexend Exa', sans-serif;
-  padding: 16px;
+  padding: 16px 0 32px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   box-sizing: border-box;
 `;
-
+const HOT = 'linear-gradient( 135deg, #FEB692 10%, #EA5455 100%)';
+const COLD = 'linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)';
 const App: React.FC = () => {
   const [isIced, setIsIced] = useState<boolean>(true);
   const [coffee, setCoffee] = useState<number>(defaultCoffee);
-  const wrapperStyle = useSpring({ backgroundColor: isIced ? 'rgba(123,223,242,1)' : 'rgba(255,59,29,1)', config });
+  const wrapperStyle = useSpring({ background: isIced ? HOT : COLD, config });
   const ratio = getRatio(isIced);
   useEffect(() => {
     const calculateVH = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     };
+    const prevent = (e: TouchEvent) => {
+      e.preventDefault();
+      return false;
+    };
     window.addEventListener('resize', calculateVH);
+    document.body.addEventListener('touchstart', prevent);
     calculateVH();
+
+    return () => {
+      window.removeEventListener('resize', calculateVH);
+      document.body.removeEventListener('touchmove', prevent);
+    };
   }, []);
   return (
     <MainWrapper style={wrapperStyle}>

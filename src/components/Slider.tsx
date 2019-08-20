@@ -20,24 +20,34 @@ interface SliderProps {
   onChange: (value: number) => void;
   ratio: number;
 }
+const GREEN = 'linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%)';
+const YELLOW = ' linear-gradient( 135deg, #FDEB71 10%, #F8D800 100%)';
 const SliderWrapper = styled.div`
   min-height: 200px;
   width: 150px;
 
   .MuiSlider-root {
     .MuiSlider-track {
-      width: 7px;
+      width: 20px;
+      background: ${YELLOW};
+      border-radius: 0 0 10px 10px;
     }
 
     .MuiSlider-rail {
-      width: 7px;
+      width: 20px;
       background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
     }
 
     .MuiSlider-thumb {
-      width: 18px;
-      height: 18px;
+      width: 30px;
+      height: 30px;
       background: white;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+
+      &.MuiSlider-active {
+        box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.2);
+      }
     }
   }
 `;
