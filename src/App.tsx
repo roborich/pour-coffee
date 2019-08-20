@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import styled from 'styled-components';
 
 import HotOrCold from './components/HotOrCold';
-import IconAttribution from './components/IconAttribution';
 import Measurements from './components/Measurements';
 import Slider from './components/Slider';
 import config from './spring-config';
@@ -14,13 +13,16 @@ const defaultCoffee = 25;
 const MainWrapper = styled(animated.div)`
   @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
 
-  height: 100%;
+  perspective: 600px;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   font-family: 'Lexend Exa', sans-serif;
   padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  box-sizing: border-box;
 `;
 
 const App: React.FC = () => {
@@ -28,35 +30,21 @@ const App: React.FC = () => {
   const [coffee, setCoffee] = useState<number>(defaultCoffee);
   const wrapperStyle = useSpring({ backgroundColor: isIced ? 'rgba(123,223,242,1)' : 'rgba(255,59,29,1)', config });
   const ratio = getRatio(isIced);
-
-  // const [coffee, setCoffee] = useState<number>(defaultCoffee);
-  // const [water, setWater] = useState<number>(Math.round(defaultCoffee * ratio));
-  // const [actualIce, setActualIce] = useState<number>(0);
-  // const waterWithIce = Math.round(water * 0.6);
-  // const ice = Math.round(water * 0.4);
-  // const handleCoffeeChange: any = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-  //   setCoffee(Number(value));
-  //   setWater(Math.round(Number(value) * ratio));
-  // };
-  // const handleWaterChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-  //   setCoffee(Math.round(Number(value) / ratio));
-  //   setWater(Number(value));
-  // };
-  // const handleSwitch = () => {
-  //   setWater(Math.round(coffee * getRatio(!isIced)));
-  //   setIsIced(!isIced);
-  // };
-  // const handleActualIce = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-  //   setActualIce(Number(value));
-  // };
+  useEffect(() => {
+    const calculateVH = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    window.addEventListener('resize', calculateVH);
+    calculateVH();
+  }, []);
   return (
     <MainWrapper style={wrapperStyle}>
       <HotOrCold value={isIced} onChange={setIsIced} />
-      <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', flex: 1, paddingTop: '32px' }}>
         <Measurements value={coffee} isIced={isIced} ratio={ratio} />
         <Slider value={coffee} onChange={setCoffee} ratio={ratio} />
       </div>
-      {/* <IconAttribution /> */}
     </MainWrapper>
   );
 };

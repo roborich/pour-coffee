@@ -11,19 +11,48 @@ interface HotOrColdProps {
   onChange: (value: boolean) => void;
 }
 
+const Wrapper = styled.div`
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+const Section = styled.div`
+  height: 150px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0.2;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 0.5;
+  }
+  img {
+    width: 80px;
+  }
+
+  span {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 18px;
+  }
+`;
 const HotOrIceCard = styled(animated.div)`
   @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
 
   font-family: 'Lexend Exa', sans-serif;
   height: 150px;
   width: 150px;
-  /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); */
   transform-style: preserve-3d;
-  /* transition: box-shadow 0.2s ease; */
-  position: relative;
+  position: absolute;
+  left: 0;
   border-radius: 4px;
   user-select: none;
-  /* perspective: 600px; */
   transform-origin: center right;
 
   img {
@@ -46,11 +75,12 @@ const HotOrIceCard = styled(animated.div)`
     align-items: center;
     will-change: transform;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-    /* transition: box-shadow 0.2s ease; */
+    transition: box-shadow 0.4s ease;
 
     &:hover {
       box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
     }
+
     span {
       font-size: 18px;
       display: block;
@@ -59,37 +89,49 @@ const HotOrIceCard = styled(animated.div)`
   }
 
   div:last-child {
-    /* z-index: -1; */
     transform: rotateY(180deg);
   }
 `;
 
 // const config = { mass: 5, tension: 500, friction: 70 };
-const transform = ((y: number, scale: number): string => `rotateY(${y}deg) scale(${scale})`) as any;
+const transform = ((y: number, hint: number): string => {
+  const isFlipped = y > 90;
+  let rotate = y + hint * (isFlipped ? -1 : 1);
+  return `rotateY(${rotate}deg)`;
+}) as any;
 
 const HotOrCold: FC<HotOrColdProps> = ({ value, onChange }) => {
   const [isHovered, setHovered] = useState(false);
-  const props = useSpring({ ys: [value ? 0 : 180, isHovered ? 1.05 : 1], config });
+  const props = useSpring({ ys: [value ? 0 : 180, isHovered ? 15 : 0], config });
   const handleClick = () => {
     const newValue = !value;
     onChange(newValue);
   };
   return (
-    <HotOrIceCard
-      style={{ transform: props.ys.interpolate(transform) }}
-      onClick={handleClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div>
-        <span>Iced</span>
-        <img src={iceSvg} />
-      </div>
-      <div>
+    <Wrapper onClick={handleClick}>
+      <Section>
         <span>Hot</span>
         <img src={hotSvg} />
-      </div>
-    </HotOrIceCard>
+      </Section>
+      <Section>
+        <span>Iced</span>
+        <img src={iceSvg} />
+      </Section>
+      <HotOrIceCard
+        style={{ transform: props.ys.interpolate(transform) }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div>
+          <span>Hot</span>
+          <img src={hotSvg} />
+        </div>
+        <div>
+          <span>Iced</span>
+          <img src={iceSvg} />
+        </div>
+      </HotOrIceCard>
+    </Wrapper>
   );
 };
 
