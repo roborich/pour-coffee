@@ -20,7 +20,7 @@ interface SliderProps {
   onChange: (value: number) => void;
   ratio: number;
 }
-const GREEN = 'linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%)';
+
 const YELLOW = ' linear-gradient( 135deg, #FDEB71 10%, #F8D800 100%)';
 const SliderWrapper = styled.div`
   min-height: 200px;

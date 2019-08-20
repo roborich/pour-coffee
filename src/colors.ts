@@ -1,5 +1,5 @@
 enum Colors {
-  blue = 'b',
+  blue = 'b', // not used yet.
 }
 
 export default Colors;
