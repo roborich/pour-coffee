@@ -5,49 +5,16 @@ import styled from 'styled-components';
 import hotSvg from '../assets/images/coffee-cup-line.svg';
 import iceSvg from '../assets/images/glass-line.svg';
 import config from '../spring-config';
+import { CARD_SIZE } from '../style';
 
 interface HotOrColdProps {
   value: boolean;
   onChange: (value: boolean) => void;
 }
 
-const Wrapper = styled.div`
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-const Section = styled.div`
-  height: 150px;
-  width: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  opacity: 0.2;
-  cursor: pointer;
-  user-select: none;
-  transition: opacity 0.2s ease;
-  &:hover {
-    opacity: 0.5;
-  }
-  img {
-    width: 80px;
-  }
-
-  span {
-    font-size: 18px;
-    display: block;
-    margin-bottom: 18px;
-  }
-`;
 const HotOrIceCard = styled(animated.div)`
-  @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
-
-  font-family: 'Lexend Exa', sans-serif;
-  height: 150px;
-  width: 150px;
+  height: ${CARD_SIZE};
+  width: ${CARD_SIZE};
   transform-style: preserve-3d;
   position: absolute;
   left: 0;
@@ -56,7 +23,8 @@ const HotOrIceCard = styled(animated.div)`
   transform-origin: center right;
 
   img {
-    width: 80px;
+    width: 50%;
+    height: 50%;
   }
 
   div {
@@ -77,19 +45,54 @@ const HotOrIceCard = styled(animated.div)`
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.4s ease;
 
-    &:hover {
-      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-    }
-
     span {
-      font-size: 18px;
+      font-size: 3vh;
       display: block;
-      margin-bottom: 18px;
+      margin-bottom: 2vh;
     }
   }
 
   div:last-child {
     transform: rotateY(180deg);
+  }
+`;
+
+const Wrapper = styled.div`
+  height: ${CARD_SIZE};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &:hover ${HotOrIceCard} div {
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+const Section = styled.div`
+  height: ${CARD_SIZE};
+  width: ${CARD_SIZE};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0.2;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  img {
+    width: 50%;
+    height: 50%;
+  }
+
+  span {
+    font-size: 3vh;
+    display: block;
+    margin-bottom: 2vh;
   }
 `;
 
@@ -102,10 +105,11 @@ const transform = ((y: number, hint: number): string => {
 
 const HotOrCold: FC<HotOrColdProps> = ({ value, onChange }) => {
   const [isHovered, setHovered] = useState(false);
-  const props = useSpring({ ys: [value ? 0 : 180, isHovered ? 15 : 0], config });
+  const props = useSpring({ ys: [value ? 180 : 0, isHovered ? 10 : 0], config });
   const handleClick = () => {
     const newValue = !value;
     onChange(newValue);
+    setHovered(false);
   };
   return (
     <Wrapper

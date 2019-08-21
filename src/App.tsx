@@ -29,7 +29,7 @@ const COLD = 'linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)';
 const App: React.FC = () => {
   const [isIced, setIsIced] = useState<boolean>(true);
   const [coffee, setCoffee] = useState<number>(defaultCoffee);
-  const wrapperStyle = useSpring({ background: isIced ? HOT : COLD, config });
+  const wrapperStyle = useSpring({ background: isIced ? COLD : HOT, config });
   const ratio = getRatio(isIced);
   useEffect(() => {
     const calculateVH = () => {

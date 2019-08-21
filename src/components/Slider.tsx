@@ -23,8 +23,8 @@ interface SliderProps {
 
 const YELLOW = ' linear-gradient( 135deg, #FDEB71 10%, #F8D800 100%)';
 const SliderWrapper = styled.div`
-  min-height: 200px;
-  width: 150px;
+  min-height: 20vh;
+  width: 20vh;
 
   .MuiSlider-root {
     .MuiSlider-track {
@@ -37,6 +37,16 @@ const SliderWrapper = styled.div`
       width: 20px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 10px;
+    }
+
+    .MuiSlider-mark {
+      width: 10px;
+      background: rgba(0, 0, 0, 0.54);
+    }
+
+    .MuiSlider-markLabel {
+      left: 42px;
+      font-family: 'Lexend Exa', sans-serif;
     }
 
     .MuiSlider-thumb {

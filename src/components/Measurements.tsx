@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import iceSvg from '../assets/images/cold-ice-cubes.svg';
 import grinder from '../assets/images/grinder-line.svg';
 import kettle from '../assets/images/kettle-line.svg';
+import { CARD_SIZE } from '../style';
 import { round } from '../util';
 
 const StyledMeasurements = styled.div`
@@ -17,11 +18,8 @@ const StyledMeasurements = styled.div`
 `;
 const Card = styled.div`
   flex: 0 0 auto;
-  width: 16vh;
-  height: 16vh;
-  padding: 16px;
-  margin: 8px;
-  text-align: center;
+  width: ${CARD_SIZE};
+  height: ${CARD_SIZE};
   background: white;
   display: flex;
   flex-direction: column;
@@ -31,7 +29,8 @@ const Card = styled.div`
   font-size: 2vh;
 
   img {
-    width: 55%;
+    width: 50%;
+    height: 50%;
   }
 
   span {
