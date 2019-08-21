@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import HotOrCold from './components/HotOrCold';
 import Measurements from './components/Measurements';
 import Slider from './components/Slider';
+import useLocalStorage from './hooks/useLocalStorage';
 import config from './spring-config';
 
 const getRatio = (isIced: boolean) => (isIced ? 65 / 1000 : 60 / 1000);
@@ -27,7 +28,7 @@ const MainWrapper = styled(animated.div)`
 const HOT = 'linear-gradient( 135deg, #FEB692 10%, #EA5455 100%)';
 const COLD = 'linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)';
 const App: React.FC = () => {
-  const [isIced, setIsIced] = useState<boolean>(true);
+  const [isIced, setIsIced] = useLocalStorage<boolean>('isIced', true);
   const [coffee, setCoffee] = useState<number>(defaultCoffee);
   const wrapperStyle = useSpring({ background: isIced ? COLD : HOT, config });
   const ratio = getRatio(isIced);
