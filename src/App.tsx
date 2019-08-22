@@ -29,7 +29,7 @@ const HOT = 'linear-gradient( 135deg, #FEB692 10%, #EA5455 100%)';
 const COLD = 'linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)';
 const App: React.FC = () => {
   const [isIced, setIsIced] = useLocalStorage<boolean>('isIced', true);
-  const [coffee, setCoffee] = useState<number>(defaultCoffee);
+  const [coffee, setCoffee] = useLocalStorage<number>('coffee', defaultCoffee);
   const wrapperStyle = useSpring({ background: isIced ? COLD : HOT, config });
   const ratio = getRatio(isIced);
   useEffect(() => {

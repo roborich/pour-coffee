@@ -1,7 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
+const getInitialValue = <T extends any>(key: string, defaultValue: T): T => {
+  const fromStore = localStorage.getItem(key);
+  if (fromStore == null) {
+    return defaultValue;
+  }
+  console.log('shit');
+  return JSON.parse(fromStore);
+};
 const useLocalStorage = <T extends any>(key: string, defaultValue: T): [T, (value: T) => void] => {
-  const [state, setState] = useState<T>(defaultValue);
+  const initialValue = useMemo(() => getInitialValue<T>(key, defaultValue), [key, defaultValue]);
+  const [state, setState] = useState<T>(initialValue);
   const setStoredState = useCallback(
     (value: T) => {
       localStorage.setItem(key, JSON.stringify(value));
@@ -9,14 +18,6 @@ const useLocalStorage = <T extends any>(key: string, defaultValue: T): [T, (valu
     },
     [setState],
   );
-  useEffect(() => {
-    const storedState = localStorage.getItem(key);
-    if (storedState == null) {
-      setStoredState(defaultValue);
-      return;
-    }
-    setState(JSON.parse(storedState));
-  }, [key]);
   return [state, setStoredState];
 };
 
