@@ -5,7 +5,6 @@ const getInitialValue = <T extends any>(key: string, defaultValue: T): T => {
   if (fromStore == null) {
     return defaultValue;
   }
-  console.log('shit');
   return JSON.parse(fromStore);
 };
 const useLocalStorage = <T extends any>(key: string, defaultValue: T): [T, (value: T) => void] => {

@@ -42,11 +42,13 @@ const App: React.FC = () => {
       return false;
     };
     window.addEventListener('resize', calculateVH);
+    window.addEventListener('orientationchange', calculateVH);
     document.body.addEventListener('touchstart', prevent);
     calculateVH();
 
     return () => {
       window.removeEventListener('resize', calculateVH);
+      window.removeEventListener('orientationchange', calculateVH);
       document.body.removeEventListener('touchmove', prevent);
     };
   }, []);
