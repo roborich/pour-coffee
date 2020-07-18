@@ -13,12 +13,11 @@ import { PourOverType } from './state';
 
 const isIced = (type: PourOverType) => type === PourOverType.Iced;
 
-const MainWrapper = styled(animated(FullHeight))`
+const MainWrapper = styled(animated.div)`
   @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
 
   perspective: 600px;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100%;
   font-family: 'Lexend Exa', sans-serif;
   padding: 16px 0 32px 0;
   display: flex;
@@ -34,28 +33,31 @@ const App: FC = () => {
   const [state, patchState] = useCentralState();
   const { ratios, type, coffeeWeight, iceRate } = state;
   const ratio = ratios[type];
-  const wrapperStyle = useSpring({ background: isIced(type) ? COLD : HOT, config });
+  const spring = { background: isIced(type) ? COLD : HOT, config };
+  const wrapperStyle = useSpring(spring);
 
   return (
-    <MainWrapper style={wrapperStyle}>
-      <Settings state={state} onChange={patchState} />
-      <HotOrCold
-        value={type === PourOverType.Iced}
-        onChange={(isIced) => {
-          patchState({ type: isIced ? PourOverType.Iced : PourOverType.Hot });
-        }}
-      />
-      <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', flex: 1, paddingTop: '32px' }}>
-        <Measurements value={coffeeWeight} iceRate={iceRate} isIced={type === PourOverType.Iced} ratio={ratio} />
-        <Slider
-          value={coffeeWeight}
-          onChange={(newWeight) => {
-            patchState({ coffeeWeight: newWeight });
+    <FullHeight>
+      <MainWrapper style={wrapperStyle}>
+        <Settings state={state} onChange={patchState} />
+        <HotOrCold
+          value={type === PourOverType.Iced}
+          onChange={(isIced) => {
+            patchState({ type: isIced ? PourOverType.Iced : PourOverType.Hot });
           }}
-          ratio={ratio}
         />
-      </div>
-    </MainWrapper>
+        <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', flex: 1, paddingTop: '32px' }}>
+          <Measurements value={coffeeWeight} iceRate={iceRate} isIced={type === PourOverType.Iced} ratio={ratio} />
+          <Slider
+            value={coffeeWeight}
+            onChange={(newWeight) => {
+              patchState({ coffeeWeight: newWeight });
+            }}
+            ratio={ratio}
+          />
+        </div>
+      </MainWrapper>
+    </FullHeight>
   );
 };
 
