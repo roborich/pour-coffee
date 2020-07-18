@@ -2,8 +2,8 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, InputAdornment,
-    Slider, Typography
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Slider,
+    Typography
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 
