@@ -41,13 +41,14 @@ const Card = styled.div`
 interface MeasurementsProps {
   value: number;
   isIced: boolean;
+  iceRate: number;
   ratio: number;
 }
 
-const Measurements: FC<MeasurementsProps> = ({ value, ratio, isIced }) => {
+const Measurements: FC<MeasurementsProps> = ({ value, ratio, isIced, iceRate }) => {
   const totalWater = round(value / ratio);
-  const water = round(totalWater * 0.6);
-  const ice = round(totalWater * 0.4);
+  const water = round(totalWater * (1 - iceRate));
+  const ice = round(totalWater * iceRate);
   return (
     <StyledMeasurements>
       <Card>

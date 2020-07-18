@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC } from 'react';
+import FullHeight from 'react-div-100vh';
 import { animated, useSpring } from 'react-spring';
 import styled from 'styled-components';
 
 import HotOrCold from './components/HotOrCold';
 import Measurements from './components/Measurements';
+import { Settings } from './components/Settings';
 import Slider from './components/Slider';
-import useLocalStorage from './hooks/useLocalStorage';
+import { useCentralState } from './hooks/useCentralState';
 import config from './spring-config';
+import { PourOverType } from './state';
 
-const getRatio = (isIced: boolean) => (isIced ? 65 / 1000 : 60 / 1000);
-const defaultCoffee = 25;
+const isIced = (type: PourOverType) => type === PourOverType.Iced;
 
-const MainWrapper = styled(animated.div)`
+const MainWrapper = styled(animated(FullHeight))`
   @import url('https://fonts.googleapis.com/css?family=Lexend+Exa&display=swap');
 
   perspective: 600px;
@@ -27,37 +29,31 @@ const MainWrapper = styled(animated.div)`
 `;
 const HOT = 'linear-gradient( 135deg, #FEB692 10%, #EA5455 100%)';
 const COLD = 'linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)';
-const App: React.FC = () => {
-  const [isIced, setIsIced] = useLocalStorage<boolean>('isIced', true);
-  const [coffee, setCoffee] = useLocalStorage<number>('coffee', defaultCoffee);
-  const wrapperStyle = useSpring({ background: isIced ? COLD : HOT, config });
-  const ratio = getRatio(isIced);
-  useEffect(() => {
-    const calculateVH = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-    const prevent = (e: TouchEvent) => {
-      e.preventDefault();
-      return false;
-    };
-    window.addEventListener('resize', calculateVH);
-    window.addEventListener('orientationchange', calculateVH);
-    document.body.addEventListener('touchstart', prevent);
-    calculateVH();
 
-    return () => {
-      window.removeEventListener('resize', calculateVH);
-      window.removeEventListener('orientationchange', calculateVH);
-      document.body.removeEventListener('touchmove', prevent);
-    };
-  }, []);
+const App: FC = () => {
+  const [state, patchState] = useCentralState();
+  const { ratios, type, coffeeWeight, iceRate } = state;
+  const ratio = ratios[type];
+  const wrapperStyle = useSpring({ background: isIced(type) ? COLD : HOT, config });
+
   return (
     <MainWrapper style={wrapperStyle}>
-      <HotOrCold value={isIced} onChange={setIsIced} />
+      <Settings state={state} onChange={patchState} />
+      <HotOrCold
+        value={type === PourOverType.Iced}
+        onChange={(isIced) => {
+          patchState({ type: isIced ? PourOverType.Iced : PourOverType.Hot });
+        }}
+      />
       <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', flex: 1, paddingTop: '32px' }}>
-        <Measurements value={coffee} isIced={isIced} ratio={ratio} />
-        <Slider value={coffee} onChange={setCoffee} ratio={ratio} />
+        <Measurements value={coffeeWeight} iceRate={iceRate} isIced={type === PourOverType.Iced} ratio={ratio} />
+        <Slider
+          value={coffeeWeight}
+          onChange={(newWeight) => {
+            patchState({ coffeeWeight: newWeight });
+          }}
+          ratio={ratio}
+        />
       </div>
     </MainWrapper>
   );

@@ -16,5 +16,8 @@
     "dist": true,
     "node_modules": true,
     "yarn.lock": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }
